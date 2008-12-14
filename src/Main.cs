@@ -250,6 +250,24 @@ namespace PkgMono.API {
 										}
 									}
 									break;
+								case "field":
+									Hashtable fields = new Hashtable();
+									foreach (Type pt in parents) {
+										foreach (FieldInfo f in pt.GetFields()) {
+											fields.Add(f.Name, f.FieldType);
+										}
+									}
+									foreach (string s in names) {
+										if (!fields.Contains(s)) {
+											Console.WriteLine("Cannot find field {0} in {1}::{2}.",
+											                  s, dlls[1], t.Name);
+										}
+										else {
+											Utils.Debug("Field {0} ({1}) found in a base class in {2}::{3}.",
+											            s, (fields[s] as Type).Name, dlls[1], t.Name);
+										}
+									}
+									break;
 								default:
 									foreach (string s in names) {
 										Console.WriteLine("NOT_IMPL: {0} {1} missing.",
