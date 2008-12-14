@@ -196,11 +196,11 @@ namespace PkgMono.API {
 										foreach (PropertyInfo p in pt.GetProperties()) {
 											properties.Add(p.Name);
 										}
-										foreach (string s in names) {
-											if (!properties.Contains(s)) {
-												Console.WriteLine("Can't find {0} {1} in {2}::{3}.",
-												                  type, s, dlls[1], t.Name);
-											}
+									}
+									foreach (string s in names) {
+										if (!properties.Contains(s)) {
+											Console.WriteLine("Can't find {0} {1} in {2}::{3}.",
+											                  type, s, dlls[1], t.Name);
 										}
 									}
 									break;
