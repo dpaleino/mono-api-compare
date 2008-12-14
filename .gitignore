@@ -1,0 +1,5 @@
+bin/*
+*.pidb
+*.user*
+testlibrary1/bin/*
+testlibrary1/*.pidb
