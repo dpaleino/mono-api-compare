@@ -1,0 +1,20 @@
+<Combine name="mono-api-comparer" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="mono-api-comparer" configuration="Debug" />
+      <Entry build="True" name="testlibrary1" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="mono-api-comparer" configuration="Release" />
+      <Entry build="True" name="testlibrary1" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="mono-api-comparer" single="True">
+    <Execute type="None" entry="mono-api-comparer" />
+    <Execute type="None" entry="testlibrary1" />
+  </StartMode>
+  <Entries>
+    <Entry filename="mono-api-comparer.mdp" />
+    <Entry filename="testlibrary1/testlibrary1.mdp" />
+  </Entries>
+</Combine>

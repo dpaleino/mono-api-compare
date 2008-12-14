@@ -1,0 +1,30 @@
+<Project name="mono-api-comparer" fileversion="2.0" DefaultNamespace="PkgMono.API" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Debug" assemblyKeyFile="." assembly="mono-api-comparer" />
+      <Build debugmode="True" target="Exe" />
+      <Execution runwithwarnings="True" commandlineparameters="-v NUnit-2.2.dll NUnit-2.4.dll" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Release" assembly="mono-api-comparer" />
+      <Build debugmode="False" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="src" subtype="Directory" buildaction="Compile" />
+    <File name="src/Main.cs" subtype="Code" buildaction="Compile" />
+    <File name="src/AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="src/Defines.cs" subtype="Code" buildaction="Compile" />
+    <File name="lib" subtype="Directory" buildaction="Compile" />
+    <File name="lib/Options.cs" subtype="Code" buildaction="Compile" />
+    <File name="src/XmlDiffParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="src/Utils.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </References>
+</Project>
