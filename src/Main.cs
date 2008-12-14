@@ -175,15 +175,33 @@ namespace PkgMono.API {
 							// d.Key is "property", "method", ...
 							string type = d.Key.ToString();
 							List<string> names = d.Value as List<string>;
+							Type[] parents = GetParentTypes(t.BaseType);
+//							foreach (Type p in parents) {
+//								Console.WriteLine("P:"+p.Name);
+//							}
 							
 							switch (type) {
 								case "constructor":
-									// ctors aren't inherited, skip them.
+									// ctors aren't inherited.
 									foreach (string s in names) {
 										string name = s.Substring(0, s.IndexOf('('));
 										string sign = s.Substring(s.IndexOf('('));
 										Console.WriteLine("Can't find {0} {1} with signature {2} in {3}::{4}",
 										                  type, name, sign, dlls[1], t.Name);
+									}
+									break;
+								case "property":
+									List<string> properties = new List<string>();
+									foreach (Type pt in parents) {
+										foreach (PropertyInfo p in pt.GetProperties()) {
+											properties.Add(p.Name);
+										}
+										foreach (string s in names) {
+											if (!properties.Contains(s)) {
+												Console.WriteLine("Can't find {0} {1} in {2}::{3}.",
+												                  type, s, dlls[1], t.Name);
+											}
+										}
 									}
 									break;
 								default:
@@ -313,6 +331,22 @@ namespace PkgMono.API {
 				}
 			}
 			return types.ToArray();		
+		}
+		
+		public static Type[] GetParentTypes(Type type) {
+			List<Type> types = new List<Type>();
+			if (type.BaseType == null) {
+				// we reached Object, it seems.
+				types.Add(type);
+				return types.ToArray();
+			}
+			else {
+				types.Add(type);
+				foreach (Type t in GetParentTypes(type.BaseType)) {
+					types.Add(t);
+				}
+			}
+			return types.ToArray();
 		}
 	}
 }
