@@ -179,7 +179,12 @@ namespace PkgMono.API {
 							switch (type) {
 								case "constructor":
 									// ctors aren't inherited, skip them.
-									
+									foreach (string s in names) {
+										string name = s.Substring(0, s.IndexOf('('));
+										string sign = s.Substring(s.IndexOf('('));
+										Console.WriteLine("Can't find {0} {1} with signature {2} in {3}::{4}",
+										                  type, name, sign, dlls[1], t.Name);
+									}
 									break;
 								default:
 									foreach (string s in names) {
