@@ -128,7 +128,8 @@ namespace PkgMono.API {
 				// we don't support these, sorry.
 				if (
 				    (child.Name == "warning") ||
-				    (child.Name == "attribute")
+				    (child.Name == "attribute") ||
+				    (child.Name == "parameter")
 				   ) {
 					continue;
 				}
