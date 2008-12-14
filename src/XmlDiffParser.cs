@@ -168,7 +168,14 @@ namespace PkgMono.API {
 								if (d.Key.ToString() == child.Name) {
 									List<string> typef = d.Value as List<string>;
 									string type = child.Attributes["name"].InnerText;
-									if (!typef.Contains(type)) {
+									bool isok = true;
+									try {
+										string presence = child.Attributes["presence"].InnerText;
+									}
+									catch {
+										isok = false;
+									}
+									if (!typef.Contains(type) && isok) {
 										Utils.Debug("Adding {0} {1}::{2}.", child.Name, parent, type);
 										typef.Add(type);
 									}
