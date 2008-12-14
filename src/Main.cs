@@ -175,7 +175,7 @@ namespace PkgMono.API {
 							// d.Key is "property", "method", ...
 							string type = d.Key.ToString();
 							List<string> names = d.Value as List<string>;
-							Type[] parents = GetParentTypes(t.BaseType);
+							Type[] parents = GetParentTypes(t);
 //							foreach (Type p in parents) {
 //								Console.WriteLine("P:"+p.Name);
 //							}
@@ -201,6 +201,52 @@ namespace PkgMono.API {
 										if (!properties.Contains(s)) {
 											Console.WriteLine("Can't find {0} {1} in {2}::{3}.",
 											                  type, s, dlls[1], t.Name);
+										}
+									}
+									break;
+								case "method":
+									Hashtable methods = new Hashtable();
+									foreach (Type pt in parents) {
+										foreach (MethodInfo m in pt.GetMethods()) {
+//											Console.WriteLine("M:"+m.Name);
+											string sign = m.ToString().Substring(m.ToString().IndexOf('('));
+											if (!methods.Contains(m.Name)) {
+												List<string> signatures = new List<string>();
+												signatures.Add(sign);
+												methods.Add(m.Name, signatures);
+											} else {
+												List<string> signatures = (methods[m.Name] as List<string>);
+												if (!signatures.Contains(sign)) {
+													signatures.Add(sign);
+												}
+											}
+										}
+									}
+									foreach (string method in names) {
+										bool found = false;
+										string name = method.Substring(0, method.IndexOf('('));
+										string sign = method.Substring(method.IndexOf('('));
+										foreach (DictionaryEntry e in methods) {
+											if (e.Key.ToString() == name) {
+//												Console.WriteLine("K:"+e.Key);
+												foreach (string s in e.Value as List<string>) {
+//													Console.WriteLine(s);
+													if (t.GetMethod(e.Key.ToString(), GetTypesFromSignature(s)) != null) {
+														Utils.Debug("Method {0} {1} found in base class, false positive.",
+														            e.Key, s);
+														found = true;
+													}
+//													else {
+//														Console.WriteLine("Can't find method {0} {1} in {2}::{3}.",
+//														                  e.Key, s, dlls[1], t.Name);
+//													}
+												}
+												break;
+											}
+										}
+										if (!found) {
+											Console.WriteLine("Can't find method {0} {1} in {2}::{3}.",
+											                  name, sign, dlls[1], t.Name);
 										}
 									}
 									break;
